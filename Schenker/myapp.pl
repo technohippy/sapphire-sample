@@ -1,4 +1,3 @@
-# myapp.pl
 #!/usr/bin/env perl
 package MyApp;
 use Schenker;
