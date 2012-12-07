@@ -46,26 +46,26 @@ class Schenker::Templates < Exporter
 
   def parse_in_file_templates
     %x{
-    my $data = do {
-        local $/;
-        package main;
-        <DATA> if defined *DATA and DATA->opened;
-    };
-    return unless $data;
-    my ($name, $tmpl);
-    for my $line (split /(\\r?\\n)/, $data) {
-        if ($line =~ /^@@\\s+(.+)/) {
-            template $name => sub { $tmpl } if $name;
-            $name = $1;
-            undef $tmpl;
-            next;
-        }
-        next unless $name;
-        $tmpl .= $line;
-    }
-    if ($name and !exists $Templates{$name}) {
-        template $name => sub { $tmpl };
-    }
+      my $data = do {
+          local $/;
+          package main;
+          <DATA> if defined *DATA and DATA->opened;
+      };
+      return unless $data;
+      my ($name, $tmpl);
+      for my $line (split /(\\r?\\n)/, $data) {
+          if ($line =~ /^@@\\s+(.+)/) {
+              template $name => sub { $tmpl } if $name;
+              $name = $1;
+              undef $tmpl;
+              next;
+          }
+          next unless $name;
+          $tmpl .= $line;
+      }
+      if ($name and !exists $Templates{$name}) {
+          template $name => sub { $tmpl };
+      }
     }
   end
 
