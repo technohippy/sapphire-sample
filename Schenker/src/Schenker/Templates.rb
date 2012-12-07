@@ -27,14 +27,15 @@ class Schenker::Templates < Exporter
     }
   end
 
-  %x{
-  BEGIN {
-      eval 'use PadWalker qw(peek_my)'; ## no critic
-      *peek_my = sub { {} } if $@;
-      make_options tt_options => \\%TTOptions;
-      make_options mt_options => \\%MTOptions;
-  }
-  }
+  __BEGIN__ do
+    begin
+      eval 'use PadWalker qw(peek_my)'
+    rescue
+      :'*peek_my = sub { {} }'
+    end
+    make_options 'tt_options', @@TTOptions.to_ref
+    make_options 'mt_options', @@MTOptions.to_ref
+  end
 
   def template(__no_self__, name, code)
     croak 'name required' unless name
