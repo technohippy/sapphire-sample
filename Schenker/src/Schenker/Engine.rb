@@ -44,7 +44,7 @@ class Schenker::Engine < Exporter
     return unless standalone
     %x{
     $SIG{INT} = $SIG{QUIT} = $SIG{TERM} = sub {
-        print STDERR "\n== Schenker has ended his set (crowd applauds)\n";
+        print STDERR "\\n== Schenker has ended his set (crowd applauds)\\n";
         exit;
     };
     }
@@ -52,10 +52,7 @@ class Schenker::Engine < Exporter
 
   def print_banner
     return unless standalone;
-    %x{
-    print STDERR "== Schenker/$Schenker::VERSION has taken the stage on @{[options->port]} " .
-            "for @{[options->environment]} with backup from @{[options->server]}\n";
-    }
+    STDERR.print "== Schenker/$Schenker::VERSION has taken the stage on @{[options->port]} for @{[options->environment]} with backup from @{[options->server]}\n";
   end
 
   def init(handler)
