@@ -42,6 +42,10 @@ class Schenker::Engine < Exporter
 
   def init_signal
     return unless standalone
+    SIG[:INT] = SIG[:QUIT] = SIG[:TERM] = ->{
+      STDERR.print "\n== Schenker has ended his set (crowd applauds)\n"
+      exit
+    }
     %x{
     $SIG{INT} = $SIG{QUIT} = $SIG{TERM} = sub {
         print STDERR "\\n== Schenker has ended his set (crowd applauds)\\n";
