@@ -122,14 +122,11 @@ Please use Schenker in your package.
     push @@Filters, code
   end
 
-  def error(*args)
-    klass = self || 'Schenker::Error' 
-    if args.empty?
-      croak 'code required'
-    else
-      code = args.pop
-      :'$Errors{$klass} = $code;' # TODO
-    end
+  def error(__no_self__, *args)
+    code = args.pop
+    croak 'code required' unless code
+    klass = args.shift || 'Schenker::Error'
+    :'$Errors{$klass} = $code;' # TODO
   end
 
   def not_found(__no_self__, *args)
@@ -420,14 +417,12 @@ Please use Schenker in your package.
       Before(->{
         headers 'X-Schenker', @@VERSION
       })
-=begin
       error ->(__self__){
         warn self
         status 500
         content_type 'text/html'
-        body self.stack_trace.as_html 'powered_by', 'Schenker'
+        body :$self.stack_trace.as_html 'powered_by', 'Schenker' # TODO
       }
-=end
       not_found ->(__self__){
           status 404
           content_type 'text/html'

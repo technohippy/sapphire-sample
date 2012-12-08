@@ -61,10 +61,8 @@ class Schenker::Engine < Exporter
 
     args = {}
     if standalone
-      args = {
-        'host' => options.host,
-        'port' => options.port
-      }
+      args['host'] = options.host
+      args['port'] = options.port
     elsif options.server == 'FCGI'
       args['listen'] = options.listen if defined options.listen
       args['nproc'] = options.nproc if defined options.nproc
