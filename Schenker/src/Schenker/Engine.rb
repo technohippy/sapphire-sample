@@ -46,12 +46,6 @@ class Schenker::Engine < Exporter
       STDERR.print "\n== Schenker has ended his set (crowd applauds)\n"
       exit
     }
-    %x{
-    $SIG{INT} = $SIG{QUIT} = $SIG{TERM} = sub {
-        print STDERR "\\n== Schenker has ended his set (crowd applauds)\\n";
-        exit;
-    };
-    }
   end
 
   def print_banner

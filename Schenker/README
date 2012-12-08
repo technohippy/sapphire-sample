@@ -1,3 +1,9 @@
-$ sapphire src/*.rb -O out
-$ sapphire src/*/*.rb -O out
-$ perl -I out/src myapp.pl 
+= Reference
+
+https://github.com/spiritloose/Schenker
+
+= How to try
+
+  $ sapphire src/*.rb -O out
+  $ sapphire src/*/*.rb -O out
+  $ perl -I out/src myapp.pl 
