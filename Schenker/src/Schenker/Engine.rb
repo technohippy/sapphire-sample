@@ -59,28 +59,20 @@ class Schenker::Engine < Exporter
     install_builtin_middlewares
     init_signal
 
-    args = nil
-    %x{
-    $args = do {
-        if (standalone) {
-            +{
-                host => options->host,
-                port => options->port,
-            };
-        } elsif (options->server eq 'FCGI') {
-            +{
-                defined options->listen  ? (listen      => options->listen)  : (),
-                defined options->nproc   ? (nproc       => options->nproc)   : (),
-                defined options->pidfile ? (pidfile     => options->pidfile) : (),
-                defined options->daemon  ? (detach      => options->daemon)  : (),
-                defined options->manager ? (manager     => options->manager) : (),
-                defined options->keeperr ? (keep_stderr => options->keeperr) : (),
-            };
-        } else {
-            +{};
-        }
-    };
-    }
+    args = {}
+    if standalone
+      args = {
+        'host' => options.host,
+        'port' => options.port
+      }
+    elsif options.server == 'FCGI'
+      args['listen'] = options.listen if defined options.listen
+      args['nproc'] = options.nproc if defined options.nproc
+      args['pidfile'] = options.pidfile if defined options.pidfile
+      args['detach'] = options.detach if defined options.detach
+      args['manager'] = options.manager if defined options.manager
+      args['keep_stderr'] = options.keeperr if defined options.keeperr
+    end
 
     engine = HTTP::Engine.new(
       'interface', {
