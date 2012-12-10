@@ -73,9 +73,7 @@ class Schenker::Options
 
   def usage
     exit_code = self || 0;
-    # TODO
-    %x{
-    print STDERR <<"END_USAGE";
+    STDERR.print <<-END_USAGE;
 Usage: $0 [OPTIONS]
     -h, --help              display this help
     -H, --host              set the host (default is 0.0.0.0)
@@ -92,8 +90,7 @@ Usage: $0 [OPTIONS]
     -M, --manager=MANAGER   specify alternate process manager
                             (FCGI::ProcManager sub-class) or empty string to disable
     -E, --keeperr           send error messages to STDOUT, not to the webserver
-END_USAGE
-    }
+    END_USAGE
     Schenker::exit exit_code
   end
 

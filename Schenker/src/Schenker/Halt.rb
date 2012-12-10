@@ -21,10 +21,10 @@ class Schenker::Halt < Exporter
   def BUILDARGS(*args)
     options = nil
     if args.size == 1
-      options[message] = args[0]
+      options['message'] = args[0]
     elsif args.size == 2
-      options[status] = args[0]
-      options[message] = args[1]
+      options['status'] = args[0]
+      options['message'] = args[1]
     end
     options
   end

@@ -251,7 +251,7 @@ Please use Schenker in your package.
   def die_in_request
     stuff = self
     if stuff.is_a?(Schenker::Error) or stuff.is_a?(Schenker::Halt)
-      die staff
+      die stuff
     end
     #raise Schenker::Error stuff
     :'raise Schenker::Error $stuff;' # TODO
