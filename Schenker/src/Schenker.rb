@@ -107,7 +107,7 @@ Please use Schenker in your package.
     croak 'usage: helpers name => code' unless scalar(args) % 2 == 0;
     helpers = args.to_hash
     helpers.each do |name, sub|
-      :$App.meta.add_method name, sub # TODO
+      @@App.meta.add_method name, sub # TODO
     end
   end
 
@@ -122,7 +122,7 @@ Please use Schenker in your package.
     code = args.pop
     croak 'code required' unless code
     klass = args.shift || 'Schenker::Error'
-    :'$Errors{$klass} = $code;' # TODO
+    @@Errors[klass] = code
   end
 
   def not_found(__no_self__, *args)
@@ -147,15 +147,15 @@ Please use Schenker in your package.
   end
 
   def param(__no_self__)
-    :request.param @_
+    request.param @_
   end
 
   def params(__no_self__)
-    :request.params @_
+    request.params @_
   end
 
   def parse_nested_query
-    new_params = :'{}' # TODO
+    new_params = {}
     param.each do |full_key|
       this_param = new_params
       value = params[full_key]
@@ -265,7 +265,7 @@ Please use Schenker in your package.
       status error.status if error.status
       body error.message  if error.message
     elsif error.is_a?(Schenker::Error)
-      handler = :'$Errors{ref $error}' || :"$Errors{'Schenker::Error'}" || ->{ # TODO
+      handler = @@Errors[ref error] || @@Errors['Schenker::Error'] || ->{
         status 500
         content_type 'text/plain'
         body 'Internal Server Error'
