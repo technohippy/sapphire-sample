@@ -246,7 +246,7 @@ Please use Schenker in your package.
 
   def die_in_request
     stuff = self
-    if stuff.is_a?(Schenker::Error) or stuff.is_a?(Schenker::Halt) or stuff.is_a?(Schenker::NotFound)
+    if stuff.is_a?(Schenker::Error) or stuff.is_a?(Schenker::Halt)
       die stuff
     end
     #raise Schenker::Error stuff
@@ -264,7 +264,7 @@ Please use Schenker in your package.
     if error.is_a?(Schenker::Halt)
       status error.status if error.status
       body error.message  if error.message
-    elsif error.is_a?(Schenker::Error) or error.is_a?(Schenker::NotFound)
+    elsif error.is_a?(Schenker::Error)
       handler = :'$Errors{ref $error}' || :"$Errors{'Schenker::Error'}" || ->{ # TODO
         status 500
         content_type 'text/plain'
