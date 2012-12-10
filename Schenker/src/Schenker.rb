@@ -107,18 +107,14 @@ Please use Schenker in your package.
     croak 'usage: helpers name => code' unless scalar(args) % 2 == 0;
     helpers = args.to_hash
     helpers.each do |name, sub|
-      App.meta.add_method name, sub
+      :$App.meta.add_method name, sub # TODO
     end
   end
 
   def Before
     code = self 
-    unless code
-      croak 'code required'
-    end
-    unless ref(code) == 'CODE'
-      croak 'code must be coderef' 
-    end
+    croak 'code required' unless code
+    croak 'code must be coderef' unless ref(code) == 'CODE'
     push @@Filters, code
   end
 
@@ -250,7 +246,7 @@ Please use Schenker in your package.
 
   def die_in_request
     stuff = self
-    if stuff.is_a?(Schenker::Error) or stuff.is_a?(Schenker::Halt)
+    if stuff.is_a?(Schenker::Error) or stuff.is_a?(Schenker::Halt) or stuff.is_a?(Schenker::NotFound)
       die stuff
     end
     #raise Schenker::Error stuff
@@ -268,7 +264,7 @@ Please use Schenker in your package.
     if error.is_a?(Schenker::Halt)
       status error.status if error.status
       body error.message  if error.message
-    elsif error.is_a?(Schenker::Error)
+    elsif error.is_a?(Schenker::Error) or error.is_a?(Schenker::NotFound)
       handler = :'$Errors{ref $error}' || :"$Errors{'Schenker::Error'}" || ->{ # TODO
         status 500
         content_type 'text/plain'
