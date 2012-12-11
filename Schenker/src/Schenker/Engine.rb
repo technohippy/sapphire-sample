@@ -10,10 +10,6 @@ class Schenker::Engine < Exporter
   engine = nil
   middleware = nil
 
-  def engine
-    :$engine # TODO
-  end
-
   def middleware
     middleware ||= HTTP::Engine::Middleware.new 'method_class', 'HTTP::Engine::Request'
   end
@@ -83,7 +79,7 @@ class Schenker::Engine < Exporter
 
   def run(*args)
     print_banner
-    res = engine.run args
+    res = :$engine.run args # TODO
     POE::Kernel.run if options.server == 'POE'
     AnyEvent.condvar.recv if options.server == 'AnyEvent'
     res
