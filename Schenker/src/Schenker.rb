@@ -107,7 +107,7 @@ Please use Schenker in your package.
     croak 'usage: helpers name => code' unless scalar(args) % 2 == 0;
     helpers = args.to_hash
     helpers.each do |name, sub|
-      @@App.meta.add_method name, sub # TODO
+      @@App.meta.add_method name, sub
     end
   end
 
