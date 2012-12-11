@@ -29,6 +29,6 @@ class Schenker::NotFound < Exporter
     mime_types.addType MIME::Type.new type_args
   end
 
-  %x'no Any::Moose;'
+  no Any::Moose
   self.meta.make_immutable
 end

@@ -1,10 +1,9 @@
 class Schenker::Error
   require 'any/moose'
-  %x{
-  use overload
-      '""'   => \\&as_string,
-      'bool' => sub { 1 };
-  }
+  use overload(
+      '""', :'\\&as_string',
+      'bool', ->{1}
+  )
   require 'c_g_i/exception_manager/stack_trace'
 
   has 'message', [
@@ -41,6 +40,6 @@ class Schenker::Error
     self.message
   end
 
-  %x'no Any::Moose;'
+  no Any::Moose
   self.meta.make_immutable
 end

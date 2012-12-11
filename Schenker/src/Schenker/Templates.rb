@@ -144,6 +144,6 @@ class Schenker::Templates < Exporter
     }
   end
 
-  %x'no Any::Moose;'
+  no Any::Moose
   self.meta.make_immutable
 end
