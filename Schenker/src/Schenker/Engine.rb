@@ -89,6 +89,6 @@ class Schenker::Engine < Exporter
     res
   end
 
-  %x'no Any::Moose;'
+  no Any::Moose
   self.meta.make_immutable
 end

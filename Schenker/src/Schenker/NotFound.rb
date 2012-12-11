@@ -5,6 +5,6 @@ class Schenker::NotFound
     extend Schenker::Error
   end
 
-  %x'no Any::Moose;'
+  no Any::Moose
   self.meta.make_immutable
 end

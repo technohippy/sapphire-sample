@@ -1,6 +1,6 @@
 class Schenker::Router
   require 'any/moose'
-  %x(use base 'Exporter';)
+  use base 'Exporter'
   require 'carp', %w(croak)
   require 'h_t_t_px/dispatcher'
 
@@ -74,6 +74,6 @@ class Schenker::Router
     route 'PUT', @_ 
   end
 
-  %x'no Any::Moose;'
+  no Any::Moose
   self.meta.make_immutable
 end

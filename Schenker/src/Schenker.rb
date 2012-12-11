@@ -54,7 +54,7 @@ Please use Schenker in your package.
   def unimport
     caller = caller()
     any_moose.unimport
-    :'no strict "refs";'
+    no strict 'refs'
     @@EXPORT.each do |method|
       delete ("#{caller}::".to_deref)[method]
     end
@@ -483,6 +483,6 @@ END_HTML
     }
   }
 
-  %x'no Any::Moose;'
+  no Any::Moose
   self.meta.make_immutable
 end

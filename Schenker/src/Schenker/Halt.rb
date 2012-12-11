@@ -1,10 +1,9 @@
 class Schenker::Halt < Exporter
   require 'any/moose'
-  %x{
-  use overload
-      '""'   => \\&as_string,
-      'bool' => sub { 1 };
-  }
+  use overload(
+      '""', :'\\&as_string',
+      'bool', ->{1}
+  )
 
   @@EXPORT = %w(halt)
 
@@ -37,7 +36,7 @@ class Schenker::Halt < Exporter
     self.message
   end
 
-  %x'no Any::Moose;'
+  no Any::Moose
   self.meta.make_immutable
 end
 

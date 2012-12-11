@@ -1,6 +1,6 @@
 class Schenker::Options
   require 'any/moose'
-  %x(use base 'Exporter';)
+  use base 'Exporter'
   require 'carp', %w(croak)
   require 'list/more_utils', %w(any)
   require 'getopt/long', %w(:config bundling no_ignore_case)
@@ -125,5 +125,5 @@ Usage: $0 [OPTIONS]
     end
   end
 
-  %x'no Any::Moose;'
+  no Any::Moose
 end
