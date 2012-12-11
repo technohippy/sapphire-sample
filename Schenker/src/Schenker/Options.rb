@@ -1,9 +1,9 @@
 class Schenker::Options
-  require 'any/moose'
+  include Any::Moose
   use base 'Exporter'
-  require 'carp', %w(croak)
-  require 'list/more_utils', %w(any)
-  require 'getopt/long', %w(:config bundling no_ignore_case)
+  include Carp, %w(croak)
+  include List::MoreUtils, %w(any)
+  include Getopt::Long, %w(:config bundling no_ignore_case)
 
   @@EXPORT = %w(
     configure options set enable disable

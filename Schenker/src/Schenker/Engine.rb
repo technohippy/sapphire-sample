@@ -1,9 +1,9 @@
 class Schenker::Engine < Exporter
-  require 'any/moose'
-  require 'carp', %w(croak)
-  require 'h_t_t_p/engine'
-  require 'h_t_t_p/engine/middleware'
-  require 'schenker/options'
+  include Any::Moose
+  include Carp, %w(croak)
+  include HTTP::Engine
+  include HTTP::Engine::Middleware
+  include Schenker::Options
 
   @@EXPORT = %w(Use)
 

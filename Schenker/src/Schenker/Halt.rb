@@ -1,5 +1,5 @@
 class Schenker::Halt < Exporter
-  require 'any/moose'
+  include Any::Moose
   use overload(
       '""', :'\\&as_string',
       'bool', ->{1}

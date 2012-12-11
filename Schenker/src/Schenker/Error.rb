@@ -1,10 +1,10 @@
 class Schenker::Error
-  require 'any/moose'
+  include Any::Moose
   use overload(
       '""', :'\\&as_string',
       'bool', ->{1}
   )
-  require 'c_g_i/exception_manager/stack_trace'
+  include CGI::ExceptionManager::StackTrace
 
   has 'message', [
     'is', 'ro',

@@ -1,5 +1,5 @@
 class Schenker::ModPerl
-  require 'any/moose'
+  include Any::Moose
 
   __BEGIN__ do
     extend HTTP::Engine::Interface::ModPerl

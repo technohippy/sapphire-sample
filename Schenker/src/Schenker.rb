@@ -1,19 +1,19 @@
 class Schenker < Exporter
-  require '5.00800'
-  require 'any/moose'
-  require 'carp', %w(croak)
-  require 'scalar/util', %w(blessed)
-  require 'path/class', %w(file dir)
-  require 'encode', %w(decode)
-  require 'u_r_i/escape', %w(uri_unescape)
-  require 'schenker/router'
-  require 'schenker/engine'
-  require 'schenker/templates'
-  require 'schenker/halt'
-  require 'schenker/options'
-  require 'schenker/error'
-  require 'schenker/not_found'
-  require 'schenker/helpers'
+  include 5.00800
+  include Any::Moose
+  include Carp, %w(croak)
+  include Scalar::Util, %w(blessed)
+  include Path::Class, %w(file dir)
+  include Encode, %w(decode)
+  include URI::Escape, %w(uri_unescape)
+  include Schenker::Router
+  include Schenker::Engine
+  include Schenker::Templates
+  include Schenker::Halt
+  include Schenker::Options
+  include Schenker::Error
+  include Schenker::NotFound
+  include Schenker::Helpers
 
   @@VERSION = '0.01';
 

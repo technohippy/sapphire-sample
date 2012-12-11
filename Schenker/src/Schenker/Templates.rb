@@ -1,6 +1,6 @@
 class Schenker::Templates < Exporter
-  require 'any/moose'
-  require 'carp', %w(croak)
+  include Any::Moose
+  include Carp, %w(croak)
 
   @@EXPORT = %w(template tt tt_options mt mt_options)
   @@Templates = [].to_hash

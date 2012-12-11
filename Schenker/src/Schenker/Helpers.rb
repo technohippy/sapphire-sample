@@ -1,7 +1,7 @@
 class Schenker::NotFound < Exporter
-  require 'any/moose'
-  require 'carp', %w(croak)
-  require 'm_i_m_e/types'
+  include Any::Moose
+  include Carp, %w(croak)
+  include MIME::Types
 
   @@EXPORT = %w(media_type mime)
   @@MIMETypes = nil

@@ -1,8 +1,8 @@
 class Schenker::Router
-  require 'any/moose'
+  include Any::Moose
   use base 'Exporter'
-  require 'carp', %w(croak)
-  require 'h_t_t_px/dispatcher'
+  include Carp, %w(croak)
+  include HTTPx::Dispatcher
 
   @@EXPORT = %w(get head post put Delete)
 

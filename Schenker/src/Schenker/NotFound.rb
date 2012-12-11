@@ -1,5 +1,5 @@
 class Schenker::NotFound
-  require 'any/moose'
+  include Any::Moose
 
   __BEGIN__ do
     extend Schenker::Error
