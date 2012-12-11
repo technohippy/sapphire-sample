@@ -182,7 +182,7 @@ Please use Schenker in your package.
   end
 
   def back
-    :request.referer
+    request.referer
   end
 
   def body
