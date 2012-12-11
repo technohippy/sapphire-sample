@@ -233,14 +233,14 @@ Please use Schenker in your package.
     rule = self
     action = rule['action']
     args = rule['args']
-    body = :'$action->($args)' # TODO
+    body = action.__call__ args
     body body if defined body and request.method != 'HEAD'
   end
 
   def run_before_filters
     rule = self
     @@Filters.each do |filter|
-      :'$filter->($rule);' # TODO
+      filter.__call__ rule
     end
   end
 
@@ -270,7 +270,7 @@ Please use Schenker in your package.
         content_type 'text/plain'
         body 'Internal Server Error'
       }
-      :'$handler->($error);' # TODO
+      handler.__call__ error
     else
       # NOTREACHED
       die

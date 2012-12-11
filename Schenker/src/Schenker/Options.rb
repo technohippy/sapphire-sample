@@ -53,18 +53,15 @@ class Schenker::Options
     code = pop
     croak 'code required' unless code
     croak 'code must be coderef' unless code.is_a? :CODE
-    # TODO
-    %x{
-    my @envs = @_;
-    $code->() if @envs == 0 or any { $_ eq options->environment } @envs;
-    }
+    envs = @_
+    code.__call__ if envs.empty? or envs.any{ $_.eq options.environment }
   end
 
   def define(*args)
     options = args.to_hash
     options.each do |option, value|
       if value.is_a? :CODE
-        self.meta.add_method option, ->{ :'$value->()' } # TODO
+        self.meta.add_method option, ->{ value.__call__ }
       else
         return self.define option, ->{ value }
       end
