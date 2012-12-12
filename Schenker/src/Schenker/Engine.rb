@@ -22,7 +22,7 @@ class Schenker::Engine < Exporter
   def install_builtin_middlewares
     configure 'development', ->{
       Use 'HTTP::Engine::Middleware::AccessLog', {
-          'logger' => ->{ :'print STDERR @_, "\\n"' }
+          'logger' => ->{ STDERR.print @_, "\\n" }
       } if standalone
     }
 
@@ -60,12 +60,12 @@ class Schenker::Engine < Exporter
       args['host'] = options.host
       args['port'] = options.port
     elsif options.server == 'FCGI'
-      args['listen'] = options.listen if defined options.listen
-      args['nproc'] = options.nproc if defined options.nproc
-      args['pidfile'] = options.pidfile if defined options.pidfile
-      args['detach'] = options.detach if defined options.detach
-      args['manager'] = options.manager if defined options.manager
-      args['keep_stderr'] = options.keeperr if defined options.keeperr
+      args['listen'] = options.listen if defined? options.listen
+      args['nproc'] = options.nproc if defined? options.nproc
+      args['pidfile'] = options.pidfile if defined? options.pidfile
+      args['detach'] = options.detach if defined? options.detach
+      args['manager'] = options.manager if defined? options.manager
+      args['keep_stderr'] = options.keeperr if defined? options.keeperr
     end
 
     engine = HTTP::Engine.new(

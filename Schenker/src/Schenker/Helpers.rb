@@ -11,18 +11,18 @@ class Schenker::NotFound < Exporter
   end
 
   def mime(__no_self__, ext, type, encoding, system)
-    croak 'usage: mime $ext => $type' if !defined ext or !defined type
+    croak 'usage: mime $ext => $type' if ext.nil? or type.nil?
     extensions = ext
     extensions = [ext] unless ext.is_a? Array
     type_args = [
       'type', type,
       'extensions', extensions,
     ]
-    if defined encoding
+    if defined? encoding
       type_args.push 'encoding'
       type_args.push encoding
     end
-    if defined system
+    if defined? system
       type_args.push 'system'
       type_args.push system
     end

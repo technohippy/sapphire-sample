@@ -39,12 +39,12 @@ class Schenker < Exporter
 
   def import(__no_self__)
     pkg, file = caller
-    croak <<-END_MSG if defined pkg and pkg == 'main'
+    croak <<-END_MSG if defined? pkg and pkg == 'main'
 Can't use Schenker in the 'main' package.
 Please use Schenker in your package.
     END_MSG
 
-    #@@App, @@AppFile = [pkg, file] unless defined @@App
+    #@@App, @@AppFile = [pkg, file] unless defined? @@App
     :'($App, $AppFile) = ($pkg, $file) unless defined $App; # only first time'
 
     self.class.export_to_level 1, @_
@@ -142,7 +142,7 @@ Please use Schenker in your package.
 
   def status
     status = self
-    response.status status if defined status
+    response.status status if defined? status
     response.status
   end
 
@@ -234,7 +234,7 @@ Please use Schenker in your package.
     action = rule['action']
     args = rule['args']
     body = action.__call__ args
-    body body if defined body and request.method != 'HEAD'
+    body body if defined? body and request.method != 'HEAD'
   end
 
   def run_before_filters
@@ -339,11 +339,11 @@ Please use Schenker in your package.
   end
 
   def run_at_end
-    $? == 0       or  return # compile error, die(), exit() with non-zero value
-    defined @@App or  return # run this file as script
-    @@Initialized and return # already called run()
-    @@Exited      and return # -h given
-    options.run   or  return # disable 'run';
+    $? == 0        or  return # compile error, die(), exit() with non-zero value
+    defined? @@App or  return # run this file as script
+    @@Initialized  and return # already called run()
+    @@Exited       and return # -h given
+    options.run    or  return # disable 'run';
     run
   end
 

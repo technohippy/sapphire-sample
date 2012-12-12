@@ -40,7 +40,7 @@ class Schenker::Router
 
     %x'$path =~ s|^/||;' # TODO
     conditions = ['method', method].to_hash
-    if defined function
+    if defined? function
       conditions['function'] = function
     end
     connect path, {
