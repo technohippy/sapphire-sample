@@ -188,7 +188,7 @@ Please use Schenker in your package.
   def body
     if self
       response.body self
-      response.content_length :'bytes::length($self)' # TODO
+      response.content_length bytes__length(self)
     end
     response.body
   end
