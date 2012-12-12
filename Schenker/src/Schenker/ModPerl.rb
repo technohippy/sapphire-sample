@@ -2,7 +2,7 @@ class Schenker::ModPerl
   include Any::Moose
 
   __BEGIN__ do
-    extend HTTP::Engine::Interface::ModPerl
+    extends HTTP::Engine::Interface::ModPerl
     Schenker.init
   end 
 

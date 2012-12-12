@@ -2,7 +2,7 @@ class Schenker::NotFound
   include Any::Moose
 
   __BEGIN__ do
-    extend Schenker::Error
+    extends Schenker::Error
   end
 
   no Any::Moose

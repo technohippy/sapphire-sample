@@ -1,6 +1,6 @@
 class Schenker::Router
   include Any::Moose
-  use base 'Exporter'
+  extend Exporter
   include Carp, %w(croak)
   include HTTPx::Dispatcher
 

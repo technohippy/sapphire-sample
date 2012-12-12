@@ -1,6 +1,6 @@
 class Schenker::Options
   include Any::Moose
-  use base 'Exporter'
+  extend Exporter
   include Carp, %w(croak)
   include List::MoreUtils, %w(any)
   include Getopt::Long, %w(:config bundling no_ignore_case)

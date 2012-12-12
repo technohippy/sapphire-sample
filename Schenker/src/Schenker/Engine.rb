@@ -22,7 +22,7 @@ class Schenker::Engine < Exporter
   def install_builtin_middlewares
     configure 'development', ->{
       Use 'HTTP::Engine::Middleware::AccessLog', {
-          'logger' => ->{ STDERR.print @_, "\\n" }
+          'logger' => ->{ STDERR.print @_, "\n" }
       } if standalone
     }
 
