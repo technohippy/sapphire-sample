@@ -61,9 +61,9 @@ class Schenker::Options
     options = args.to_hash
     options.each do |option, value|
       if value.is_a? :CODE
-        self.meta.add_method option, ->{ value.__call__ }
+        self.meta.add_method(option) { value.__call__ }
       else
-        return self.define option, ->{ value }
+        return self.define(option) { value }
       end
     end
   end

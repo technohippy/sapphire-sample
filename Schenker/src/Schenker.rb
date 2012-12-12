@@ -351,15 +351,15 @@ Please use Schenker in your package.
     run_at_end
   }
 
-  configure ->{
+  configure do
     set 'environment', ENV['SCHENKER_ENV'] || 'development'
     disable 'sessions'
     enable 'logging'
     enable 'reload'
-    set 'root', ->{ file(@@AppFile).dir }
+    set 'root' do file(@@AppFile).dir end
     enable 'static'
-    set 'public', ->{ dir(options.root).subdir('public') }
-    set 'views', ->{ dir(options.root).subdir('views') }
+    set 'public' do dir(options.root).subdir('public') end
+    set 'views' do dir(options.root).subdir('views') end
     enable 'run'
     set 'server', 'ServerSimple'
     set 'host', '0.0.0.0'
@@ -409,17 +409,17 @@ Please use Schenker in your package.
 
     Schenker::Options.parse_argv
 
-    configure 'development', ->{
-      Before(->{
+    configure 'development' do
+      Before do
         headers 'X-Schenker', @@VERSION
-      })
-      error ->(__self__){
+      end
+      error do |__self__|
         warn self
         status 500
         content_type 'text/html'
         body :$self.stack_trace.as_html 'powered_by', 'Schenker' # TODO
-      }
-      not_found ->(__self__){
+      end
+      not_found do |__self__|
           status 404
           content_type 'text/html'
           body <<"END_HTML"
@@ -441,11 +441,11 @@ Please use Schenker in your package.
   </body>
   </html>
 END_HTML
-      }
-    }
+      end
+    end
 
-    configure %w(test production), ->{
-      error ->(__self__){
+    configure %w(test production) do
+      error do |__self__|
         warn self
         status 500
         content_type 'text/html; charset=iso-8859-1'
@@ -466,8 +466,8 @@ caused the error.</p>
 in the server error log.</p>
 </body></html>
 END_HTML
-      }
-      not_found ->(__self__){
+      end
+      not_found do |__self__|
         status 404
         content_type 'text/html; charset=iso-8859-1'
         body <<"END_HTML"
@@ -479,9 +479,9 @@ END_HTML
 <p>The requested URL @{[request->path]} was not found on this server.</p>
 </body></html>
 END_HTML
-      }
-    }
-  }
+      end
+    end
+  end
 
   no Any::Moose
   self.meta.make_immutable

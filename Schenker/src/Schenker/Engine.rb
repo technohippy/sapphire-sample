@@ -20,11 +20,11 @@ class Schenker::Engine < Exporter
   end
 
   def install_builtin_middlewares
-    configure 'development', ->{
+    configure 'development' do
       Use 'HTTP::Engine::Middleware::AccessLog', {
           'logger' => ->{ STDERR.print @_, "\n" }
       } if standalone
-    }
+    end
 
     Use 'HTTP::Engine::Middleware::Static', {
       'regexp' => %r{^/(.*)$},
