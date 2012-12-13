@@ -17,11 +17,7 @@ class Schenker::Error
   ]
 
   def BUILDARGS(message)
-    if message
-      message = message.to_s
-    else
-      message = ''
-    end
+    message = message ? message.to_s : ''
     stack_trace = CGI::ExceptionManager::StackTrace.new message
     { :message => message, :stack_trace => stack_trace }
   end
