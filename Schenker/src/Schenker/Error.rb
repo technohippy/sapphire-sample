@@ -23,12 +23,7 @@ class Schenker::Error
   end
 
   def raise
-    this = nil
-    if ref(self)
-      this = self
-    else
-      this = self.new @_
-    end
+    this = ref(self) ? self : self.new(@_)
     die this
   end
 
