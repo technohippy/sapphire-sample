@@ -322,7 +322,7 @@ Please use Schenker in your package.
   def init
     @@Initialized and return
     Schenker::Templates.parse_in_file_templates
-    Schenker::Engine.init :'\&request_handler' # TODO
+    Schenker::Engine.init method(:request_handler)
     @@Initialized = 1
   end
 
