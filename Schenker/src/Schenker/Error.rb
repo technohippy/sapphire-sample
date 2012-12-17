@@ -1,7 +1,7 @@
 class Schenker::Error
   include Any::Moose
   use overload(
-      '""', :'\\&as_string',
+      '""', method(:as_string),
       'bool', ->{1}
   )
   include CGI::ExceptionManager::StackTrace

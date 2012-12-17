@@ -28,7 +28,7 @@ class Schenker::Router
       orig_func = function
       function = ->{
         if orig_func
-          :'$orig_func->() or return 0;' # TODO
+          orig_func.__call__ or return 0
         end
         if agent.is_a? Regexp
           Schenker.request.user_agent =~ agent
