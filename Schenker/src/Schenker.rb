@@ -44,8 +44,10 @@ Can't use Schenker in the 'main' package.
 Please use Schenker in your package.
     END_MSG
 
-    #@@App, @@AppFile = [pkg, file] unless defined? @@App
-    :'($App, $AppFile) = ($pkg, $file) unless defined $App; # only first time'
+    unless defined? @@App
+      @@App = pkg
+      @@AppFile = file
+    end
 
     self.class.export_to_level 1, @_
     any_moose.import into_level: 1
@@ -278,28 +280,33 @@ Please use Schenker in your package.
   def dispatch(res)
     req = self
     stash = {}
-%x{
-    no warnings 'redefine';
-    local *request   = sub { $req };
-    local *response  = sub { $res };
-    local *stash     = make_stash($stash);
-    local *session   = make_session;
-    local *error     = \\&error_in_request;
-    local *not_found = \\&not_found_in_request;
+    no warnings 'redefine'
+    local do
+      request = (->{ req }).to_glob
+      response = (->{ res }).to_glob
+      stash = (make_stash stash).to_glob
+      session = make_session.to_glob
+      error = method(:error_in_request).to_glob
+      not_found = method(:not_found_in_request).to_glob
+    end
 
-    no strict 'refs';
-    local *{"$App\\::request"}   = \\&request;
-    local *{"$App\\::response"}  = \\&response;
-    local *{"$App\\::stash"}     = \\&stash;
-    local *{"$App\\::session"}   = \\&session;
-    local *{"$App\\::error"}     = \\&error;
-    local *{"$App\\::not_found"} = \\&not_found;
-    use strict;
-    use warnings;
+    no strict 'refs'
+    local do
+      __lvar__["$App\\::request"] = method(:request).to_glob
+      __lvar__["$App\\::response"] = method(:response).to_glob
+      __lvar__["$App\\::stash"] = method(:stash).to_glob
+      __lvar__["$App\\::session"] = method(:session).to_glob
+      __lvar__["$App\\::error"] = method(:error).to_glob
+      __lvar__["$App\\::not_found"] = method(:not_found).to_glob
+    end
 
-    local $@;
-    local $SIG{__DIE__} = \\&die_in_request;
-}
+    use strict
+    use warnings
+    local do
+      $@ = nil
+      SIG[:__DIE__] = method :die_in_request
+    end
+
     begin
       rule = Schenker::Router.match req
       route_missing unless rule
