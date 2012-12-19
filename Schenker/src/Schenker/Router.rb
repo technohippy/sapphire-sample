@@ -38,7 +38,7 @@ class Schenker::Router
       }
     end
 
-    $path.gsub! %r|^/|, ''
+    path.gsub! %r|^/|, ''
     conditions = ['method', method].to_hash
     if defined? function
       conditions['function'] = function
