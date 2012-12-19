@@ -280,29 +280,26 @@ Please use Schenker in your package.
   def dispatch(res)
     req = self
     stash = {}
-    no warnings 'redefine'
+
     local do
+      no warnings 'redefine'
       request = (->{ req }).to_glob
       response = (->{ res }).to_glob
       stash = (make_stash stash).to_glob
       session = make_session.to_glob
       error = method(:error_in_request).to_glob
       not_found = method(:not_found_in_request).to_glob
-    end
 
-    no strict 'refs'
-    local do
+      no strict 'refs'
       __lvar__["$App\\::request"] = method(:request).to_glob
       __lvar__["$App\\::response"] = method(:response).to_glob
       __lvar__["$App\\::stash"] = method(:stash).to_glob
       __lvar__["$App\\::session"] = method(:session).to_glob
       __lvar__["$App\\::error"] = method(:error).to_glob
       __lvar__["$App\\::not_found"] = method(:not_found).to_glob
-    end
 
-    use strict
-    use warnings
-    local do
+      use strict
+      use warnings
       $@ = nil
       SIG[:__DIE__] = method :die_in_request
     end
